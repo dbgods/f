@@ -30,6 +30,12 @@ const actions = {
           commit('loginFailure', error);
           dispatch('alert/error', error, { root: true });
         });
+
+//  UNCOMMENT to test get
+        // axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/")
+        // .then(function(response) {
+        //   console.log(response);
+        // })
     },
     logout({ commit }) {
         userService.logout();
