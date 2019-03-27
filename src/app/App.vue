@@ -1,29 +1,43 @@
 <template>
-    <div class="jumbotron">
-      <ul v-show="!isNotLoggedIn" style="width: 100%;">
+    <div class="jumbotron" style="width: 100% !important; background-color: grey !important">
+      <ul v-show="!isNotLoggedIn" style="width: 100% !important;margin-right: 5% !important;margin-left: 12% !important;">
         <li style="display:inline-block;margin-right:10px;">
-          <router-link to="/" class="router">Home</router-link>
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
+              <router-link to="/" class="router">Home</router-link>
+          </button>
         </li>
         <li style="display:inline-block;margin-right:10px;">
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Packages" class="router">Packages</router-link>
+          </button>
         </li>
         <li style="display:inline-block;margin-right:10px;">
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Complaints" class="router">Complaints</router-link>
+          </button>
         </li>
         <li style="display:inline-block;margin-right:10px;">
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Vehicles" class="router">Vehicles</router-link>
+          </button>
         </li>
         <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Employees" class="router">Employees</router-link>
+          </button>
         </li>
         <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Customers" class="router">Customers</router-link>
+          </button>
         </li>
         <li style="display:inline-block;text-align:right;">
-          <router-link to="/login">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout</router-link>
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
+          <router-link to="/login"> Logout</router-link>
+          </button>
         </li>
       </ul>
-        <div class="container">
+        <div class="container" style="margin-right: 15% !important;margin-left: 15% !important;">
             <div class="row">
                 <div>
                     <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}</div>
@@ -63,3 +77,9 @@ export default {
     }
 };
 </script>
+
+<style media="screen">
+ .button{
+   border-radius: 5px !important
+ }
+</style>

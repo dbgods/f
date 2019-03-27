@@ -43,23 +43,24 @@ const actions = {
         commit('logout');
     },
     register({ dispatch, commit }, user) {
-        commit('registerRequest', user);
+      console.log("reg user");
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/create",{
 
-        userService.register(user)
-            .then(
-                user => {
-                    commit('registerSuccess', user);
-                    router.push('/login');
-                    setTimeout(() => {
-                        // display success message after route change completes
-                        dispatch('alert/success', 'Registration successful', { root: true });
-                    })
-                },
-                error => {
-                    commit('registerFailure', error);
-                    dispatch('alert/error', error, { root: true });
-                }
-            );
+          "username" : user.username,
+          "password" : user.password,
+          "name" : user.name,
+          "type" : user.type
+
+      }).then(function (response) {
+        console.log(response.data);
+        router.push('/');
+        commit('registered');
+      }).catch(function (error) {
+        console.log(error);
+        commit('Reg_failure', error);
+        dispatch('alert/error', error, { root: true });
+      });
     }
 };
 

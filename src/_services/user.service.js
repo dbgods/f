@@ -3,7 +3,6 @@ import axios from "axios";
 export const userService = {
   login,
   logout,
-  register,
   getAll,
   getById,
   update,
@@ -40,17 +39,6 @@ function logout() {
   localStorage.removeItem("user");
 }
 
-function register(user) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  };
-
-  return fetch(`http://localhost:4000/users/register`, requestOptions).then(
-    handleResponse
-  );
-}
 
 function getAll() {
   const requestOptions = {

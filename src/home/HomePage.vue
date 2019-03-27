@@ -2,8 +2,6 @@
   <div>
     <h1>Hi {{ account.user.name }}!</h1>
     <p>You're logged in !</p>
-    <em v-if="users.loading">Loading users...</em>
-    <span v-if="users.error" class="text-danger">ERROR: {{ users.error }}</span>
 
     <p>
       <router-link to="/login">Logout</router-link>
