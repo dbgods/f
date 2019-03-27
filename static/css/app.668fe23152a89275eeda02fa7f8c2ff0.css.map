@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.668fe23152a89275eeda02fa7f8c2ff0.css"],"names":[],"mappings":"AACA,QACE,2BAA6B,CAC9B","file":"app.668fe23152a89275eeda02fa7f8c2ff0.css","sourcesContent":["\n.button{\n  border-radius: 5px !important\n}\n"]}
