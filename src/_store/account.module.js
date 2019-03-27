@@ -9,22 +9,23 @@ const state = user
 const actions = {
     login({ dispatch, commit }, { username, password }) {
         console.log("try");
-        axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/login/",{
-          headers: {
-            "Content-Type": "application/json",
-            "x-requested-with": "local"
-          },
-          body: JSON.stringify({ username, password })
+        axios.defaults.headers.common['x-requested-with'] = 'local';
+        axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/login",{
+
+            "username" : username,
+            "password" : password
+
         }).then(function (response) {
           console.log(response.data);
           // login successful if there's a jwt token in the response
           let user = response.data;
-          commit('loginSuccess', user);
-          router.push('/');
+
           if (user.token) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('user', JSON.stringify(user));
           }
+          commit('loginSuccess', user);
+          router.push('/');
         }).catch(function (error) {
           console.log(error);
           commit('loginFailure', error);
