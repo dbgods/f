@@ -4,12 +4,16 @@
   "description": "A Vue.js project",
   "author": "Sam Parhimchik <d1j0b@ugrad.cs.ubc.ca>",
   "private": true,
+  "homepage": "https://dbgods.github.io/f",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
     "vee-validate": "^2.2.0",
     "vue": "^2.5.2",
     "vue-good-table": "^2.16.3",

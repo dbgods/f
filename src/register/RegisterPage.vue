@@ -9,7 +9,10 @@
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
-                <input type="text" v-model="user.type" v-validate="'required'" name="type" class="form-control" :class="{ 'is-invalid': submitted && errors.has('type') }" />
+                <select v-model="user.type" v-validate="'required'" name="type" class="form-control" :class="{ 'is-invalid': submitted && errors.has('type') }" >
+                  <option>manager</option>
+                  <option>basic</option>
+                  </select>
                 <div v-if="submitted && errors.has('type')" class="invalid-feedback">{{ errors.first('type') }}</div>
             </div>
             <div class="form-group">

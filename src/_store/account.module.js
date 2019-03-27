@@ -1,6 +1,6 @@
 import { userService } from '../_services';
 import { router } from '../_helpers';
-
+import axios from 'axios';
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user
     ? { status: { loggedIn: true }, user }
@@ -8,19 +8,28 @@ const state = user
 
 const actions = {
     login({ dispatch, commit }, { username, password }) {
-        commit('loginRequest', { username });
-    
-        userService.login(username, password)
-            .then(
-                user => {
-                    commit('loginSuccess', user);
-                    router.push('/');
-                },
-                error => {
-                    commit('loginFailure', error);
-                    dispatch('alert/error', error, { root: true });
-                }
-            );
+        console.log("try");
+        axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/login/",{
+          headers: {
+            "Content-Type": "application/json",
+            "x-requested-with": "local"
+          },
+          body: JSON.stringify({ username, password })
+        }).then(function (response) {
+          console.log(response.data);
+          // login successful if there's a jwt token in the response
+          let user = response.data;
+          commit('loginSuccess', user);
+          router.push('/');
+          if (user.token) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              localStorage.setItem('user', JSON.stringify(user));
+          }
+        }).catch(function (error) {
+          console.log(error);
+          commit('loginFailure', error);
+          dispatch('alert/error', error, { root: true });
+        });
     },
     logout({ commit }) {
         userService.logout();
@@ -28,7 +37,7 @@ const actions = {
     },
     register({ dispatch, commit }, user) {
         commit('registerRequest', user);
-    
+
         userService.register(user)
             .then(
                 user => {
