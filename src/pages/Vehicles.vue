@@ -169,18 +169,13 @@ export default {
       ) {
         return [
           {
-            package_trackingno: "1294YE32",
-            package_content: "Documents",
-            pacakge_type: "Envelope",
-            package_status: "En Route",
-            package_driverid: "Jarred Huskell"
-          },
-          {
-            package_trackingno: "4252YE30",
-            package_content: "Furniture",
-            pacakge_type: "Crate",
-            package_status: "At shipment facility",
-            package_driverid: "Kevin Matthew"
+            vehicle_number: 1,
+            vehicle_type: "SUV",
+            vehicle_maxcapacity: 15,
+            vehicle_availability: "True",
+            vehicle_whetherToRepair: "False",
+            insurance_number: "38-198-0818",
+            warehouse_region: "A03"
           }
         ];
       } else {
