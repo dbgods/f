@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1>Complaints</h1>
-    <div id="tableHold2">
+    <h1>Drivers</h1>
+    <div id="tableHold3">
       <vue-good-table
         class="table"
-        title="complaints"
-        :columns="compCols"
-        :rows="complaints"
+        title="drivers"
+        :columns="driCols"
+        :rows="drivers"
         :globalSearch="true"
         :paginate="true"
-        :perPage="5"
+        :perPage="10"
       >
       </vue-good-table>
     </div>
@@ -25,38 +25,42 @@ import { mapState, mapActions } from "vuex";
 import { VueGoodTable } from "vue-good-table";
 
 export default {
-  name: "Complaints",
+  name: "Drivers",
   data() {
     return {
-      compCols: [
+      driCols: [
         {
-          label: "Complaint No.",
-          field: "complaint_id"
+          label: "ID",
+          field: "employee_id"
         },
         {
-          label: "Typr",
-          field: "complaint_type"
+          label: "Name",
+          field: "employee_name"
         },
         {
-          label: "Urgency",
-          field: "complaint_urgency"
+          label: "Rank",
+          field: "employee_rank"
         },
         {
-          label: "Info",
-          field: "complaint_info"
+          label: "Payroll ($)",
+          field: "employee_payroll"
         },
         {
-          label: "Department",
-          field: "complaint_departmentinvolved"
+          label: "Contact",
+          field: "employee_contact"
+        },
+        {
+          label: "Address",
+          field: "employee_address"
         }
       ]
     };
   },
   computed: {
-    complaints: function() {
+    drivers: function() {
       if (
-        this.$store.state.complaints == null ||
-        typeof this.$store.state.complaints == "undefined"
+        this.$store.state.drivers == null ||
+        typeof this.$store.state.drivers == "undefined"
       ) {
         return [
           {
@@ -68,7 +72,7 @@ export default {
           }
         ];
       } else {
-        return this.$store.state.complaints;
+        return this.$store.state.drivers;
       }
     }
   },

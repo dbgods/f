@@ -21,6 +21,9 @@
 import { mapState, mapActions } from "vuex";
 import { VueGoodTable } from "vue-good-table";
 
+//import 'vue-good-table/dist/vue-good-table.css'
+import axios from 'axios';
+
 export default {
   name: "Packages",
   data() {
@@ -28,27 +31,27 @@ export default {
       packCols: [
         {
           label: "Tracking No.",
-          field: "Package_TrackingNo",
+          field: "package_trackingno",
           filterable: true
         },
         {
           label: "Content",
-          field: "Package_Content",
+          field: "package_content",
           filterable: true
         },
         {
           label: "Type",
-          field: "Package_Type",
+          field: "pacakge_type",
           filterable: true
         },
         {
           label: "Status",
-          field: "Package_Status",
+          field: "package_status",
           filterable: true
         },
         {
           label: "Driver",
-          field: "Employee_Name",
+          field: "package_driverid",
           filterable: true
         }
       ]
@@ -57,31 +60,33 @@ export default {
   computed: {
     packages: function() {
       if (
-        this.$store.state.Packages == null ||
-        typeof this.$store.state.Packages.data == "undefined"
+        this.$store.state.packages == null ||
+        typeof this.$store.state.packages == "undefined"
       ) {
         return [
           {
-            Package_TrackingNo: "1294YE32",
-            Package_Content: "Documents",
-            Package_Type: "Envelope",
-            Package_Status: "En Route",
-            Employee_Name: "Jarred Huskell"
+            package_trackingno: "1294YE32",
+            package_content: "Documents",
+            pacakge_type: "Envelope",
+            package_status: "En Route",
+            package_driverid: "Jarred Huskell"
           },
           {
-            Package_TrackingNo: "4252YE30",
-            Package_Content: "Furniture",
-            Package_Type: "Crate",
-            Package_Status: "At shipment facility",
-            Employee_Name: "Kevin Matthew"
+            package_trackingno: "4252YE30",
+            package_content: "Furniture",
+            pacakge_type: "Crate",
+            package_status: "At shipment facility",
+            package_driverid: "Kevin Matthew"
           }
         ];
       } else {
-        return this.$store.state.Packages.data;
+
+        return this.$store.state.packages;
       }
     }
   },
-  created() {},
+  created() {
+  },
   methods: {}
 };
 </script>

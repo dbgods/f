@@ -15,6 +15,10 @@ export const store = new Vuex.Store({
     },
     state: {
       notLoggedIn: true,
-      isManager: false
+      isManager: false,
+      packages: [],
+      complaints: [],
+      vehicles: [],
+      drivers: []
     }
 });

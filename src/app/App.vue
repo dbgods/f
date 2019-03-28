@@ -1,5 +1,5 @@
 <template>
-    <div class="jumbotron" style="width: 100% !important; background-color: grey !important">
+    <div class="jumbotron" style="width: 100% !important; background-color: #ccd !important">
       <ul v-show="!isNotLoggedIn" style="width: 100% !important;margin-right: 5% !important;margin-left: 12% !important;">
         <li style="display:inline-block;margin-right:10px;">
           <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
@@ -19,6 +19,11 @@
         <li style="display:inline-block;margin-right:10px;">
           <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Vehicles" class="router">Vehicles</router-link>
+          </button>
+        </li>
+        <li style="display:inline-block;margin-right:10px;">
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
+          <router-link to="/Drivers" class="router">Drivers</router-link>
           </button>
         </li>
         <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
