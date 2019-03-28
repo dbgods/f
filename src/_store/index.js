@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
       packages: [],
       complaints: [],
       vehicles: [],
-      drivers: []
+      drivers: [],
+      customers: []
     }
 });

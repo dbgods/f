@@ -52,6 +52,22 @@ export default {
     }).catch(function (error) {
       console.log(error);
     });
+    axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/customers")
+    .then(function (response) {
+      console.log(">>>customers");
+      console.log(response.data);
+      self.$store.state.customers = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
+    axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles")
+    .then(function (response) {
+      console.log(">>>vehicles");
+      console.log(response.data);
+      self.$store.state.vehicles = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
   },
   methods: {
     ...mapActions("users", {
