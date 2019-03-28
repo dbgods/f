@@ -151,11 +151,13 @@ export default {
       ) {
         return [
           {
-            Complaint_number: "274",
-            Complaint_type: "Late Delivery",
-            Complaint_Urgency: 2,
-            Complaint_Info: "Package arrived a week late",
-            Complaint_DepartmentInvolved: "Warehouses"
+            vehicle_number: 1,
+            vehicle_type: "SUV",
+            vehicle_maxcapacity: 15,
+            vehicle_availability: "True",
+            vehicle_whetherToRepair: "False",
+            insurance_number: "38-198-0818",
+            warehouse_region: "A03"
           }
         ];
       } else {
@@ -166,6 +168,33 @@ export default {
   created() {
   },
   methods: {
+    processForm: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formData))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles", this.formData)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormDel: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.vehicle_number))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles" + "?vehicle_number=" + this.vehicle_number)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormMod: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formDataModify))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.put("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles", this.formDataModify)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    }
   }
 };
 </script>
