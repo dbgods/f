@@ -1,24 +1,197 @@
 <template>
   <div>
     <h1>Employees</h1>
-    <p>In the works...</p>
+    <div id="tableHold4">
+      <vue-good-table
+        class="table"
+        title="Employees"
+        :columns="empCols"
+        :rows="employees"
+        :globalSearch="true"
+        :paginate="true"
+        :perPage="10"
+      >
+      </vue-good-table>
+    </div>
+  <div>
+    <h2>Add a new Employee</h2>
+    <form id="add_form" @submit.prevent="processForm">
+      <input type="text" name="name" placeholder="Name" v-model="formData.name">
+      <input type="text" name="contact" placeholder="Contact" v-model="formData.contact">
+      <input type="text" name="address" placeholder="Address" v-model="formData.address">
+      <select name="position" v-model="formData.position">
+        <option value="Manager">Manager</option>
+        <option value="Driver">Driver</option>
+      </select>
+       <select name="rank" v-model="formData.rank">
+        <option value="High">High</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+      </select>
+      <input type="number" name="payroll" placeholder="Payroll($)" v-model="formData.payroll">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    <h2>Delete an Employee</h2>
+    <form id="delete_form" @submit.prevent="processFormDel">
+      <input type="number" name="id" placeholder="ID" v-model.number="id.id">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    <h2>Modify an Employee</h2>
+    <form id="add_form" @submit.prevent="processFormMod">
+      <input type="number" name="id" placeholder="ID" v-model="formDataModify.id">
+      <input type="text" name="name" placeholder="Name" v-model="formDataModify.name">
+      <input type="text" name="contact" placeholder="Contact" v-model="formDataModify.contact">
+      <input type="text" name="address" placeholder="Address" v-model="formDataModify.address">
+      <select name="position" v-model="formDataModify.position">
+        <option value="Manager">Manager</option>
+        <option value="Driver">Driver</option>
+      </select>
+      <select name="rank" v-model="formDataModify.rank">
+        <option value="High">High</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+      </select>
+      <input type="number" name="payroll" placeholder="Payroll($)" v-model="formDataModify.urgency">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
-
-    <p>
-      <router-link to="/login">Logout</router-link>
-    </p>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { VueGoodTable } from "vue-good-table";
+import axios from "axios";
 
 export default {
+  name: "Employees",
+  data() {
+    return {
+        id: {
+        id: 0,
+      },
+      formData: {
+        name: "",
+        contact: "",
+        address: "",
+        position: "",
+        rank: "",
+        payroll: 0,
+      },
+      formDataModify: {
+        id: 0,
+        name: "",
+        contact: "",
+        address: "",
+        position: "",
+        rank: "",
+        payroll: 0,
+      },
+      empCols: [
+        {
+          label: "ID",
+          field: "employee_id",
+          filterable: true
+        },
+        {
+          label: "Name",
+          field: "employee_name",
+          filterable: true
+        },
+        {
+          label: "Contact",
+          field: "employee_contact",
+          filterable: true
+        },
+        {
+          label: "Address",
+          field: "employee_address",
+          filterable: true
+        },
+        {
+          label: "Position",
+          field: "employee_position",
+          filterable: true
+        },
+        {
+          label: "Rank",
+          field: "employee_rank",
+          filterable: true
+        },
+        {
+          label: "Payroll($)",
+          field: "employee_payroll",
+          filterable: true
+        }
+      ]
+    };
+  },
   computed: {
+    employees: function() {
+      if (
+        this.$store.state.employees == null ||
+        typeof this.$store.state.employees == "undefined"
+      ) {
+        return [
+          {
+            employee_id: 1234,
+            employee_name: "Kevin",
+            employee_contact: "123-456-7890",
+            employee_address: "5959 Main Mall",
+            employee_position: "Manager",
+            employee_rank: "High",
+            employee_payroll: 100000
+          },
+          {
+            employee_id: 4321,
+            employee_name: "Michael",
+            employee_contact: "546-123-7890",
+            employee_address: "1001 Main Mall",
+            employee_position: "Driver",
+            employee_rank: "Mid",
+            employee_payroll: 10000
+          }
+        ];
+      } else {
+        return this.$store.state.employees;
+      }
+    }
   },
   created() {
   },
   methods: {
+    processForm: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formData))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees", this.formData)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormDel: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.trackingNo))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees" + "?trackingno=" + this.id)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormMod: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formDataModify))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.put("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees", this.formDataModify)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    }
   }
 };
 </script>
