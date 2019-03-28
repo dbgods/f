@@ -13,6 +13,8 @@
       >
       </vue-good-table>
     </div>
+
+
   <div>
     <h2>Add a new Complaint</h2>
     <form id="add_form" @submit.prevent="processForm">
@@ -30,13 +32,17 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+
+
   <div>
     <h2>Delete a Complaint</h2>
     <form id="delete_form" @submit.prevent="processFormDel">
-      <input type="number" name="id" placeholder="ID" v-model.number="trackingNo.id">
+      <input type="number" name="id" placeholder="ID" v-model.number="id.id">
       <button type="submit">Submit</button>
     </form>
   </div>
+
+
   <div>
     <h2>Modify a Complaint</h2>
     <form id="add_form" @submit.prevent="processFormMod">
@@ -62,6 +68,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { VueGoodTable } from "vue-good-table";
+import axios from "axios";
 
 export default {
   name: "Complaints",
@@ -98,11 +105,11 @@ export default {
         },
         {
           label: "Departmentinvolved",
-          field: "complaint_DepartmentInvolved",
+          field: "complaint_departmentInvolved",
           filterable: true
         },
         {
-          label: "type",
+          label: "Type",
           field: "complaint_type",
           filterable: true
         }
