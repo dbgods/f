@@ -43,14 +43,14 @@
     </form>
   </div>
   <div>
-    <h2>Delete a Package</h2>
+    <h2>Delete a Driver</h2>
     <form id="delete_form" @submit.prevent="processFormDel">
-      <input type="number" name="id" placeholder="ID" v-model.number="ID.id">
+      <input type="number" name="id" placeholder="ID" v-model.number="id.id">
       <button type="submit">Submit</button>
     </form>
   </div>
   <div>
-    <h2>Modify a Package</h2>
+    <h2>Modify a Driver</h2>
     <form id="add_form" @submit.prevent="processFormMod">
       <input type="text" name="name" placeholder="Name" v-model="formDataModify.name">
       <input type="text" name="address" placeholder="Address" v-model="formDataModify.address">
@@ -125,7 +125,9 @@ export default {
         {
           label: "ID",
           field: "employee_id",
-          filterable: true
+          filterable: true,
+          type: "number",
+          sortable: true
         },
         {
           label: "Name",
@@ -150,7 +152,8 @@ export default {
         {
           label: "Payroll ($)",
           field: "driver_id",
-          filterable: true
+          filterable: true,
+          type: "number"
         },
         {
           label: "License",
@@ -170,7 +173,8 @@ export default {
         {
           label: "Capacity",
           field: "vehicle_maxcapacity",
-          filterable: true
+          filterable: true,
+          type: "number"
         },
         {
           label: "Availability",
@@ -204,7 +208,7 @@ export default {
             employee_contact: "123-456-7890",
             employee_rank: "High",
             employee_payroll: 100000,
-            license_number: 01234567,
+            license_number: 1234567,
             vehicle_number: 1,
             vehicle_type: "SUV",
             vehicle_capacity: 15,
@@ -234,7 +238,7 @@ export default {
       console.log("Processing")
       console.log(JSON.stringify(this.id))
       axios.defaults.headers.common['x-requested-with'] = 'local';
-      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers" + "?id=" + this.id)
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers" + "?id=" + this.id.id)
       .then(response => {
         console.log(JSON.stringify(response.data));
       })

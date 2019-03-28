@@ -178,7 +178,7 @@ export default {
       console.log("Processing")
       console.log(JSON.stringify(this.id))
       axios.defaults.headers.common['x-requested-with'] = 'local';
-      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees" + "?id=" + this.id)
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees" + "?id=" + this.id.id)
       .then(response => {
         console.log(JSON.stringify(response.data));
       })

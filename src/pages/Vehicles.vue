@@ -1,73 +1,67 @@
 <template>
   <div>
     <h1>Vehicles</h1>
-    <div id="tableHold4">
+    <div id="tableHold">
       <vue-good-table
         class="table"
-        title="vehicles"
-        :columns="vehiCols"
+        title="Packages"
+        :columns="vehicleCols"
         :rows="vehicles"
         :globalSearch="true"
         :paginate="true"
-        :perPage="10"
+        :perPage="3"
       >
       </vue-good-table>
     </div>
-
-    <div>
-    <h2>Add a new Complaint</h2>
-    <form id="add_form" @submit.prevent="processForm">
-      <select name="type" v-model="formData.type">
-        <option value="SUV">SUV</option>
-        <option value="MiniVan">MiniVan</option>
-        <option value="BigTruck">BigTruck</option>
-        <option value="MediumTruck">MediumTruck</option>
-        <option value="SmallTruck">SmallTruck</option>
+  <div>
+    <h2>Add a new Vehicle</h2>
+    <form @submit.prevent="processForm">
+      <input type="text" name="type" placeholder="Type" v-model="formData.type">
+      <input type="number" name="maxcapacity" placeholder="Max Capacity" v-model.number="formData.maxcapacity">
+      <input type="text" name="warehouse_region" placeholder="Warehouse Region" v-model="formData.warehouseregion">
+      <p>Availability: {{ availability }}</p>
+      <select name="whethertorepair" v-model="formData.availability">
+      <option selected="selected" value="true">True</option>
+      <option value="false">False</option>
       </select>
-      <input type="number" name="capacity" placeholder="Capacity" v-model="formData.capacity">
-      <select name="availability" v-model="formData.availability">
-        <option value="True">True</option>
-        <option value="False">False</option>
+      <p>Repair Status Selected: {{ whethertorepair }}</p>
+      <select name="whethertorepair" v-model="formData.whethertorepair">
+      <option selected="selected" value="true">True</option>
+      <option value="false">False</option>
       </select>
-      <select name="whehterToRepair" v-model="formData.whetherToRepair">
-        <option value="True">True</option>
-        <option value="False">False</option>
+      <p>Insurance:</p><br>
+      <input type="text" name="insurance_number" placeholder="Insurance No." v-model="insuranceForm.insurance_number">
+      <select name="whethertorepair" v-model="insuranceForm.insurance_coverage">
+      <option selected="selected" value="Full">Full</option>
+      <option value="Partial">Partial</option>
       </select>
-      <input type="text" name="insurance" placeholder="Insurance" v-model="formData.insurance">
-      <input type="text" name="warehouse" placeholder="Warehouse" v-model="formData.warehouse">
       <button type="submit">Submit</button>
     </form>
   </div>
-
   <div>
-    <h2>Delete a Package</h2>
+    <h2>Delete a Vehicle</h2>
     <form id="delete_form" @submit.prevent="processFormDel">
-      <input type="number" name="vehicle_number" placeholder="Vehicle" v-model.number="vehicle_number.vehicle_number">
+      <input type="text" name="vehiclenumber" placeholder="Vehicle No" v-model="vehicleno.number">
       <button type="submit">Submit</button>
     </form>
   </div>
-
   <div>
-    <h2>Modify a Complaint</h2>
-    <form id="add_form" @submit.prevent="processForm">
-      <select name="type" v-model="formDataModify.type">
-        <option value="SUV">SUV</option>
-        <option value="MiniVan">MiniVan</option>
-        <option value="BigTruck">BigTruck</option>
-        <option value="MediumTruck">MediumTruck</option>
-        <option value="SmallTruck">SmallTruck</option>
+    <h2>Modify a Vehicle</h2>
+    <form id="add_form" @submit.prevent="processFormMod">
+      <input type="text" name="number" placeholder="Vehicle No." v-model="formDataModify.number">
+      <input type="text" name="type" placeholder="Type" v-model="formDataModify.type">
+      <input type="number" name="maxcapacity" placeholder="Max Capacity" v-model.number="formDataModify.maxcapacity">
+      <input type="text" name="warehouse_region" placeholder="Warehouse Region" v-model="formDataModify.warehouseregion">
+      <p>Availability: {{ availability }}</p>
+      <select name="whethertorepair" v-model="formDataModify.availability">
+      <option selected="selected" value="true">True</option>
+      <option value="false">False</option>
       </select>
-      <input type="number" name="capacity" placeholder="Capacity" v-model="formDataModify.capacity">
-      <select name="availability" v-model="formDataModify.availability">
-        <option value="True">True</option>
-        <option value="False">False</option>
+      <p>Repair Status Selected: {{ whethertorepair }}</p>
+      <select name="whethertorepair" v-model="formDataModify.whethertorepair">
+      <option selected="selected" value="true">True</option>
+      <option value="false">False</option>
       </select>
-      <select name="whehterToRepair" v-model="formDataModify.whetherToRepair">
-        <option value="True">True</option>
-        <option value="False">False</option>
-      </select>
-      <input type="text" name="insurance" placeholder="Insurance" v-model="formDataModify.insurance">
-      <input type="text" name="warehouse" placeholder="Warehouse" v-model="formDataModify.warehouse">
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -81,32 +75,36 @@ import { VueGoodTable } from "vue-good-table";
 import axios from "axios";
 
 export default {
-  name: "Vehicles",
   data() {
-    return {
-      vehicle_number: {
-        vehicle_number: 0,
-      },
-      formData: {
-        type: "",
-        capacity: 0,
-        availability: "",
-        whehterToRepair: "",
-        insurnace: "",
-        warehouse: "",
-      },
-      formDataModify: {
-        vehicle_number: 0,
-        type: "",
-        capacity: 0,
-        availability: "",
-        whehterToRepair: "",
-        insurnace: "",
-        warehouse: "",
-      },
-      vehiCols: [
+      return {
+        vehicleno: {
+          number: ""
+        },
+        insuranceForm: {
+          insurance_number: "",
+          insurance_coverage: "",
+        },
+        formDataModify: {
+          number: "",
+          type: "",
+          maxcapacity: 0,
+          availability: "",
+          whethertorepair: "",
+          insurancenumber: "",
+          warehouseregion: "",
+        },
+        formData: {
+          number: "",
+          type: "",
+          maxcapacity: 0,
+          availability: "",
+          whethertorepair: "",
+          insurancenumber: "",
+          warehouseregion: "",
+        },
+        vehicleCols: [
         {
-          label: "Vehicle",
+          label: "Vehicle No.",
           field: "vehicle_number",
           filterable: true
         },
@@ -116,7 +114,7 @@ export default {
           filterable: true
         },
         {
-          label: "Capacity",
+          label: "Status",
           field: "vehicle_maxcapacity",
           filterable: true
         },
@@ -126,12 +124,12 @@ export default {
           filterable: true
         },
         {
-          label: "WhetherToRepair",
-          field: "vehicle_whetherToRepair",
+          label: "Needs Repair?",
+          field: "vehicle_whethertorepair",
           filterable: true
         },
         {
-          label: "Insurance",
+          label: "Insurance No.",
           field: "insurance_number",
           filterable: true
         },
@@ -141,9 +139,29 @@ export default {
           filterable: true
         }
       ]
-    };
+      }
   },
   computed: {
+    whethertorepair: function() {
+      if (this.formData.whethertorepair == "true") {
+        this.formData.whethertorepair = true;
+        return "True"
+      } else {
+        this.formData.whethertorepair = false;
+        return "False"
+      }
+      console.log(JSON.stringify(this.formData))
+    },
+    availability: function() {
+      if (this.formData.availability == "true") {
+        this.formData.availability = true;
+        return "True"
+      } else {
+        this.formData.availability = false;
+        return "False"
+      }
+      console.log(JSON.stringify(this.formData))
+    },
     vehicles: function() {
       if (
         this.$store.state.vehicles == null ||
@@ -151,11 +169,18 @@ export default {
       ) {
         return [
           {
-            Complaint_number: "274",
-            Complaint_type: "Late Delivery",
-            Complaint_Urgency: 2,
-            Complaint_Info: "Package arrived a week late",
-            Complaint_DepartmentInvolved: "Warehouses"
+            package_trackingno: "1294YE32",
+            package_content: "Documents",
+            pacakge_type: "Envelope",
+            package_status: "En Route",
+            package_driverid: "Jarred Huskell"
+          },
+          {
+            package_trackingno: "4252YE30",
+            package_content: "Furniture",
+            pacakge_type: "Crate",
+            package_status: "At shipment facility",
+            package_driverid: "Kevin Matthew"
           }
         ];
       } else {
@@ -166,6 +191,38 @@ export default {
   created() {
   },
   methods: {
+    processForm: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.insuranceForm))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles/insurance", this.insuranceForm)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+        console.log("Now Creating Vehicle")
+        this.formData.insurancenumber = this.insuranceForm.insurance_number;
+        return axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles/", this.formData)
+      }).then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormDel: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.trackingNo))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles" + "?number=" + this.vehicleno.number)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormMod: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formDataModify))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.put("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles", this.formDataModify)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    }
   }
 };
 </script>
