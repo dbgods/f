@@ -68,6 +68,14 @@ export default {
     }).catch(function (error) {
       console.log(error);
     });
+    axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees")
+    .then(function (response) {
+      console.log(">>>employees");
+      console.log(response.data);
+      self.$store.state.employees = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
   },
   methods: {
     ...mapActions("users", {
