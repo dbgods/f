@@ -10,6 +10,7 @@ import Packages from '../pages/Packages'
 import Complaints from '../pages/Complaints'
 import Vehicles from '../pages/Vehicles'
 import Drivers from '../pages/Drivers'
+import Stats from '../pages/Stats'
 
 Vue.use(Router);
 
@@ -25,6 +26,7 @@ export const router = new Router({
     { path: '/Complaints', component: Complaints },
     { path: '/Vehicles', component: Vehicles },
     { path: '/Drivers', component: Drivers },
+    { path: '/Stats', component: Stats },
 
     // otherwise redirect to home
     { path: '*', redirect: '/' }

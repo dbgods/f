@@ -36,6 +36,11 @@
           <router-link to="/Customers" class="router">Customers</router-link>
           </button>
         </li>
+        <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
+          <router-link to="/Stats" class="router">Statistics</router-link>
+          </button>
+        </li>
         <li style="display:inline-block;text-align:right;">
           <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/login"> Logout</router-link>
