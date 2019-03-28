@@ -4,7 +4,7 @@
     <div id="tableHold3">
       <vue-good-table
         class="table"
-        title="drivers"
+        title="Drivers"
         :columns="driCols"
         :rows="drivers"
         :globalSearch="true"
@@ -14,9 +14,69 @@
       </vue-good-table>
     </div>
 
-    <p>
-      <router-link to="/login">Logout</router-link>
-    </p>
+    <div>
+    <h2>Add a new Driver</h2>
+    <form id="add_form" @submit.prevent="processForm">
+      <input type="text" name="name" placeholder="Name" v-model="formData.name">
+      <input type="text" name="address" placeholder="Address" v-model="formData.address">
+      <input type="text" name="contact" placeholder="Contact" v-model="formData.contact">
+      <select name="rank" v-model="formData.rank">
+        <option value="High">High</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+      </select>
+      <input type="number" name="driverid" placeholder="Payroll ($)" v-model="formData.payroll">
+      <input type="number" name="lincensenumber" placeholder="License" v-model="formData.licensenumber">
+      <input type="number" name="vehicle" placeholder="Vehicle" v-model="formData.vehicle">
+      <select name="type" v-model="formData.type">
+        <option value="SUV">SUV</option>
+        <option value="MiniVan">MiniVan</option>
+        <option value="BigTruck">BigTruck</option>
+        <option value="MediumTruck">MediumTruck</option>
+        <option value="SmallTruck">SmallTruck</option>
+      </select>
+      <input type="number" name="capacity" placeholder="Capacity" v-model="formData.capacity">
+      <input type="text" name="availability" placeholder="Availability" v-model="formData.availability">
+      <input type="text" name="insurance" placeholder="Insurance" v-model="formData.insurance">
+      <input type="text" name="warehouse" placeholder="Warehouse" v-model="formData.warehouse">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    <h2>Delete a Package</h2>
+    <form id="delete_form" @submit.prevent="processFormDel">
+      <input type="number" name="id" placeholder="ID" v-model.number="ID.id">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div>
+    <h2>Modify a Package</h2>
+    <form id="add_form" @submit.prevent="processFormMod">
+      <input type="text" name="name" placeholder="Name" v-model="formDataModify.name">
+      <input type="text" name="address" placeholder="Address" v-model="formDataModify.address">
+      <input type="text" name="contact" placeholder="Contact" v-model="formDataModify.contact">
+      <select name="rank" v-model="formDataModify.rank">
+        <option value="High">High</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+      </select>
+      <input type="number" name="driverid" placeholder="Payroll ($)" v-model="formDataModify.payroll">
+      <input type="number" name="lincensenumber" placeholder="License" v-model="formDataModify.licensenumber">
+      <input type="number" name="vehicle" placeholder="Vehicle" v-model="formDataModify.vehicle">
+      <select name="type" v-model="formDataModify.type">
+        <option value="SUV">SUV</option>
+        <option value="MiniVan">MiniVan</option>
+        <option value="BigTruck">BigTruck</option>
+        <option value="MediumTruck">MediumTruck</option>
+        <option value="SmallTruck">SmallTruck</option>
+      </select>
+      <input type="number" name="capacity" placeholder="Capacity" v-model="formDataModify.capacity">
+      <input type="text" name="availability" placeholder="Availability" v-model="formDataModify.availability">
+      <input type="text" name="insurance" placeholder="Insurance" v-model="formDataModify.insurance">
+      <input type="text" name="warehouse" placeholder="Warehouse" v-model="formDataModify.warehouse">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
   </div>
 </template>
 
