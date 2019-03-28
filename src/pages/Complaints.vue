@@ -79,7 +79,7 @@ export default {
       },
       formData: {
         info: "",
-        departmentinvolved: "",
+        departmentinvolvend: "",
         type: "",
         urgency: "",
         timestamp: "",
