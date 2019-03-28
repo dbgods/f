@@ -25,7 +25,7 @@
         <option value="Mid">Mid</option>
         <option value="Low">Low</option>
       </select>
-      <input type="number" name="driverid" placeholder="Payroll ($)" v-model="formData.payroll">
+      <input type="number" name="payroll" placeholder="Payroll ($)" v-model="formData.payroll">
       <input type="number" name="lincensenumber" placeholder="License" v-model="formData.licensenumber">
       <input type="number" name="vehicle" placeholder="Vehicle" v-model="formData.vehicle">
       <select name="type" v-model="formData.type">
@@ -60,7 +60,7 @@
         <option value="Mid">Mid</option>
         <option value="Low">Low</option>
       </select>
-      <input type="number" name="driverid" placeholder="Payroll ($)" v-model="formDataModify.payroll">
+      <input type="number" name="payroll" placeholder="Payroll ($)" v-model="formDataModify.payroll">
       <input type="number" name="lincensenumber" placeholder="License" v-model="formDataModify.licensenumber">
       <input type="number" name="vehicle" placeholder="Vehicle" v-model="formDataModify.vehicle">
       <select name="type" v-model="formDataModify.type">
@@ -83,59 +83,109 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { VueGoodTable } from "vue-good-table";
+import axios from "axios";
 
 export default {
   name: "Drivers",
   data() {
     return {
+        id: {
+        id: 0,
+      },
+      formData: {
+        name: "",
+        address: "",
+        contact: "",
+        rank: "",
+        payroll: 0,
+        licensenumber: 0,
+        vehicle: 0,
+        type: "",
+        capacity: 0,
+        availability: "",
+        insurance: "",
+        warehouse: "",
+
+      },
+      formDataModify: {
+        name: "",
+        address: "",
+        contact: "",
+        rank: "",
+        payroll: 0,
+        licensenumber: 0,
+        vehicle: 0,
+        type: "",
+        capacity: 0,
+        availability: "",
+        insurance: "",
+        warehouse: "",
+      },
       driCols: [
         {
           label: "ID",
-          field: "employee_id"
+          field: "employee_id",
+          filterable: true
         },
         {
           label: "Name",
-          field: "employee_name"
-        },
-        {
-          label: "Rank",
-          field: "employee_rank"
-        },
-        {
-          label: "Payroll ($)",
-          field: "driver_id"
-        },
-        {
-          label: "Contact",
-          field: "employee_contact"
+          field: "employee_name",
+          filterable: true
         },
         {
           label: "Address",
-          field: "employee_address"
+          field: "employee_address",
+          filterable: true
         },
         {
-          label: "Vehicle",
-          field: "vehicle_number"
+          label: "Contact",
+          field: "employee_contact",
+          filterable: true
         },
         {
-          label: "Type",
-          field: "vehicle_type"
+          label: "Rank",
+          field: "employee_rank",
+          filterable: true
         },
         {
-          label: "Capacity",
-          field: "vehicle_maxcapacity"
+          label: "Payroll ($)",
+          field: "driver_id",
+          filterable: true
         },
         {
           label: "License",
-          field: "license_number"
+          field: "license_number",
+          filterable: true
+        },
+        {
+          label: "Vehicle",
+          field: "vehicle_number",
+          filterable: true
+        },
+        {
+          label: "Type",
+          field: "vehicle_type",
+          filterable: true
+        },
+        {
+          label: "Capacity",
+          field: "vehicle_maxcapacity",
+          filterable: true
+        },
+        {
+          label: "Availability",
+          field: "vehicle_availability",
+          filterable: true
         },
         {
           label: "Insurance",
-          field: "insurance_number"
+          field: "insurance_number",
+          filterable: true
         },
         {
           label: "Warehouse",
-          field: "warehouse_region"
+          field: "warehouse_region",
+          filterable: true
         }
       ]
     };
@@ -148,11 +198,19 @@ export default {
       ) {
         return [
           {
-            Complaint_number: "274",
-            Complaint_type: "Late Delivery",
-            Complaint_Urgency: 2,
-            Complaint_Info: "Package arrived a week late",
-            Complaint_DepartmentInvolved: "Warehouses"
+            employee_id: 1,
+            employee_name: "Kevin",
+            employee_address: "1234 Main Mall",
+            employee_contact: "123-456-7890",
+            employee_rank: "High",
+            employee_payroll: 100000,
+            license_number: 01234567,
+            vehicle_number: 1,
+            vehicle_type: "SUV",
+            vehicle_capacity: 15,
+            vehicle_availability: "True",
+            insurance_number: "99-999-9999",
+            warehouse_region: "A1",
           }
         ];
       } else {
@@ -163,6 +221,33 @@ export default {
   created() {
   },
   methods: {
+    processForm: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formData))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers", this.formData)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormDel: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.id))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers" + "?id=" + this.id)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    },
+    processFormMod: function() {
+      console.log("Processing")
+      console.log(JSON.stringify(this.formDataModify))
+      axios.defaults.headers.common['x-requested-with'] = 'local';
+      axios.put("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers", this.formDataModify)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+      })
+    }
   }
 };
 </script>

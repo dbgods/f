@@ -176,7 +176,7 @@ export default {
     },
     processFormDel: function() {
       console.log("Processing")
-      console.log(JSON.stringify(this.trackingNo))
+      console.log(JSON.stringify(this.id))
       axios.defaults.headers.common['x-requested-with'] = 'local';
       axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees" + "?id=" + this.id)
       .then(response => {
