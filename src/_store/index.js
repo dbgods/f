@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
       complaints: [],
       vehicles: [],
       drivers: [],
-      customers: []
+      customers: [],
+      employees: []
     }
 });
