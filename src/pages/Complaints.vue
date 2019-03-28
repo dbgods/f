@@ -104,8 +104,8 @@ export default {
           filterable: true
         },
         {
-          label: "Departmentinvolved",
-          field: "complaint_departmentInvolved",
+          label: "Department Involved",
+          field: "complaint_departmentinvolved",
           filterable: true
         },
         {
