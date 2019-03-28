@@ -6,13 +6,16 @@
         class="table"
         title="Packages"
         :columns="packCols"
-        :rows="packages"
+        :rows="packRows"
         :globalSearch="true"
         :paginate="true"
         :perPage="5"
       >
       </vue-good-table>
     </div>
+  <div>
+    <p>Add or Modify</p>
+  </div>
 
   </div>
 </template>
@@ -20,6 +23,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { VueGoodTable } from "vue-good-table";
+import axios from "axios";
 
 //import 'vue-good-table/dist/vue-good-table.css'
 import axios from 'axios';
@@ -28,6 +32,7 @@ export default {
   name: "Packages",
   data() {
     return {
+      packRows: [],
       packCols: [
         {
           label: "Tracking No.",
@@ -41,7 +46,7 @@ export default {
         },
         {
           label: "Type",
-          field: "pacakge_type",
+          field: "package_type",
           filterable: true
         },
         {
