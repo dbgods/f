@@ -43,7 +43,7 @@ export default {
         },
         {
           label: "Payroll ($)",
-          field: "employee_payroll"
+          field: "driver_id"
         },
         {
           label: "Contact",
@@ -52,6 +52,30 @@ export default {
         {
           label: "Address",
           field: "employee_address"
+        },
+        {
+          label: "Vehicle",
+          field: "vehicle_number"
+        },
+        {
+          label: "Type",
+          field: "vehicle_type"
+        },
+        {
+          label: "Capacity",
+          field: "vehicle_maxcapacity"
+        },
+        {
+          label: "License",
+          field: "license_number"
+        },
+        {
+          label: "Insurance",
+          field: "insurance_number"
+        },
+        {
+          label: "Warehouse",
+          field: "warehouse_region"
         }
       ]
     };

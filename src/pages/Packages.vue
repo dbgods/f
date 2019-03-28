@@ -6,7 +6,7 @@
         class="table"
         title="Packages"
         :columns="packCols"
-        :rows="packRows"
+        :rows="packages"
         :globalSearch="true"
         :paginate="true"
         :perPage="5"
@@ -30,7 +30,6 @@ export default {
   name: "Packages",
   data() {
     return {
-      packRows: [],
       packCols: [
         {
           label: "Tracking No.",
@@ -54,7 +53,27 @@ export default {
         },
         {
           label: "Driver",
-          field: "package_driverid",
+          field: "Driver",
+          filterable: true
+        },
+        {
+          label: "Sender",
+          field: "sender",
+          filterable: true
+        },
+        {
+          label: "Origin",
+          field: "sender_address",
+          filterable: true
+        },
+        {
+          label: "Receiver",
+          field: "receiver",
+          filterable: true
+        },
+        {
+          label: "Destination",
+          field: "receiver_address",
           filterable: true
         }
       ]
