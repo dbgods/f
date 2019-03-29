@@ -6,13 +6,15 @@
         class="table"
         title="Drivers"
         :columns="driCols"
-        :rows="drivers"
+        :rows="drivers_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="10"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
+
 
     <div>
     <h2>Add a new Driver</h2>
@@ -130,6 +132,7 @@ export default {
         insurance: "",
         warehouse: "",
       },
+      drivers_data: [],
       driCols: [
         {
           label: "ID",
@@ -204,36 +207,14 @@ export default {
     };
   },
   computed: {
-    drivers: function() {
-      if (
-        this.$store.state.drivers == null ||
-        typeof this.$store.state.drivers == "undefined"
-      ) {
-        return [
-          {
-            employee_id: 1,
-            employee_name: "Kevin",
-            employee_address: "1234 Main Mall",
-            employee_contact: "123-456-7890",
-            employee_rank: "High",
-            employee_payroll: 100000,
-            license_number: 1234567,
-            vehicle_number: 1,
-            vehicle_type: "SUV",
-            vehicle_capacity: 15,
-            vehicle_availability: "True",
-            insurance_number: "99-999-9999",
-            warehouse_region: "A1",
-          }
-        ];
-      } else {
-        return this.$store.state.drivers;
-      }
-    }
   },
   created() {
+    this.render()
   },
   methods: {
+    helloworld: function() {
+      this.render()
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.formData))
@@ -260,6 +241,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/drivers")
+      .then(response => {
+        console.log(">>>drivers");
+        console.log(response.data);
+        this.drivers_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };

@@ -6,13 +6,14 @@
         class="table"
         title="Complaints"
         :columns="packCols"
-        :rows="complaints"
+        :rows="complaints_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="5"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
 
 
   <div>
@@ -77,6 +78,7 @@ export default {
       id: {
         id: 0,
       },
+      complaints_data: [],
       formData: {
         info: "",
         departmentinvolvend: "",
@@ -117,28 +119,14 @@ export default {
     };
   },
   computed: {
-    complaints: function() {
-      if (
-        this.$store.state.complaints == null ||
-        typeof this.$store.state.complaints == "undefined"
-      ) {
-        return [
-          {
-            Complaint_number: "274",
-            Complaint_type: "Late Delivery",
-            Complaint_Urgency: 2,
-            Complaint_Info: "Package arrived a week late",
-            Complaint_DepartmentInvolved: "Warehouses"
-          }
-        ];
-      } else {
-        return this.$store.state.complaints;
-      }
-    }
   },
   created() {
+    this.render();
   },
   methods: {
+    helloworld: function() {
+      this.render();
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.formData))
@@ -152,7 +140,7 @@ export default {
       console.log("Processing")
       console.log(JSON.stringify(this.id))
       axios.defaults.headers.common['x-requested-with'] = 'local';
-      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/complaints" + "?id=" + this.id)
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/complaints" + "?id=" + this.id.id)
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
@@ -165,6 +153,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/complaints")
+      .then(response => {
+        console.log(">>>complaints");
+        console.log(response.data);
+        this.complaints_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };

@@ -6,13 +6,15 @@
         class="table"
         title="Packages"
         :columns="vehicleCols"
-        :rows="vehicles"
+        :rows="vehicles_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="3"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
+
   <div>
     <h2>Add a new Vehicle</h2>
     <form @submit.prevent="processForm">
@@ -77,6 +79,7 @@ import axios from "axios";
 export default {
   data() {
       return {
+        vehicles_data: [],
         vehicleno: {
           number: ""
         },
@@ -184,8 +187,12 @@ export default {
     }
   },
   created() {
+    this.render()
   },
   methods: {
+    helloworld: function() {
+      this.render()
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.insuranceForm))
@@ -217,6 +224,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/vehicles")
+      .then(response => {
+        console.log(">>>vehicles");
+        console.log(response.data);
+        this.vehicles_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };

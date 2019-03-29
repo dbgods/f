@@ -6,13 +6,14 @@
         class="table"
         title="Packages"
         :columns="packCols"
-        :rows="packages"
+        :rows="packages_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="5"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
   <div>
     <h2>Add a new Package</h2>
     <form id="add_form" @submit.prevent="processForm">
@@ -74,6 +75,7 @@ export default {
       trackingNo: {
         trackingno: 0,
       },
+      packages_data: [],
       formData: {
         content: "",
         type: "",
@@ -141,36 +143,14 @@ export default {
     };
   },
   computed: {
-    packages: function() {
-      if (
-        this.$store.state.packages == null ||
-        typeof this.$store.state.packages == "undefined"
-      ) {
-        return [
-          {
-            package_trackingno: "1294YE32",
-            package_content: "Documents",
-            pacakge_type: "Envelope",
-            package_status: "En Route",
-            package_driverid: "Jarred Huskell"
-          },
-          {
-            package_trackingno: "4252YE30",
-            package_content: "Furniture",
-            pacakge_type: "Crate",
-            package_status: "At shipment facility",
-            package_driverid: "Kevin Matthew"
-          }
-        ];
-      } else {
-
-        return this.$store.state.packages;
-      }
-    }
   },
   created() {
+    this.render()
   },
   methods: {
+    helloworld: function() {
+      this.render()
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.formData))
@@ -197,6 +177,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/packages")
+      .then(response => {
+        console.log(">>>packages");
+        console.log(response.data);
+        this.packages_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };

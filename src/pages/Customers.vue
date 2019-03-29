@@ -6,13 +6,14 @@
         class="table"
         title="Customers"
         :columns="custCols"
-        :rows="customers"
+        :rows="customer_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="10"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
 
 
   <div>
@@ -63,6 +64,7 @@ export default {
       id: {
         id: 0,
       },
+      customer_data: [],
       formData: {
         name: "",
         contact: "",
@@ -106,28 +108,14 @@ export default {
     };
   },
   computed: {
-    customers: function() {
-      if (
-        this.$store.state.customers == null ||
-        typeof this.$store.state.customers == "undefined"
-      ) {
-        return [
-          {
-            Customer_id: 1,
-            Customer_name: "Culley",
-            Customer_contact: "296-182-3160",
-            Customer_address: "2781 Gulseth Center",
-            Cutsomer_creditRating: 397
-          }
-        ];
-      } else {
-        return this.$store.state.customers;
-      }
-    }
   },
   created() {
+    this.render()
   },
   methods: {
+    helloworld: function() {
+      this.render();
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.formData))
@@ -141,7 +129,7 @@ export default {
       console.log("Processing")
       console.log(JSON.stringify(this.id))
       axios.defaults.headers.common['x-requested-with'] = 'local';
-      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/customers" + "?id=" + this.id)
+      axios.delete("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/customers" + "?id=" + this.id.id)
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
@@ -154,6 +142,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/customers")
+      .then(response => {
+        console.log(">>>customers");
+        console.log(response.data);
+        this.customer_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };

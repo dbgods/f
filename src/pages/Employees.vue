@@ -6,13 +6,15 @@
         class="table"
         title="Employees"
         :columns="empCols"
-        :rows="employees"
+        :rows="employees_data"
         :globalSearch="true"
         :paginate="true"
         :perPage="10"
       >
       </vue-good-table>
     </div>
+    <button v-on:click="helloworld">Refresh</button>
+
   <div>
     <h2>Add a new Employee</h2>
     <form id="add_form" @submit.prevent="processForm">
@@ -92,6 +94,7 @@ export default {
         rank: "",
         payroll: 0,
       },
+      employees_data: [],
       empCols: [
         {
           label: "ID",
@@ -132,39 +135,14 @@ export default {
     };
   },
   computed: {
-    employees: function() {
-      if (
-        this.$store.state.employees == null ||
-        typeof this.$store.state.employees == "undefined"
-      ) {
-        return [
-          {
-            employee_id: 1234,
-            employee_name: "Kevin",
-            employee_contact: "123-456-7890",
-            employee_address: "5959 Main Mall",
-            employee_position: "Manager",
-            employee_rank: "High",
-            employee_payroll: 100000
-          },
-          {
-            employee_id: 4321,
-            employee_name: "Michael",
-            employee_contact: "546-123-7890",
-            employee_address: "1001 Main Mall",
-            employee_position: "Driver",
-            employee_rank: "Mid",
-            employee_payroll: 10000
-          }
-        ];
-      } else {
-        return this.$store.state.employees;
-      }
-    }
   },
   created() {
+    this.render()
   },
   methods: {
+    helloworld: function() {
+      this.render()
+    },
     processForm: function() {
       console.log("Processing")
       console.log(JSON.stringify(this.formData))
@@ -191,6 +169,16 @@ export default {
       .then(response => {
         console.log(JSON.stringify(response.data));
       })
+    },
+    render: function() {
+      axios.get("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/employees")
+      .then(response => {
+        console.log(">>>employees");
+        console.log(response.data);
+        this.employees_data = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };
