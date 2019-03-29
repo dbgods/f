@@ -110,6 +110,49 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+        <div>
+            <h2>Division</h2><br>
+            <p>Division</p>
+            <vue-good-table
+            class="table"
+            title="Division"
+            :columns="division_cols"
+            :rows="division_data"
+            :globalSearch="true"
+            :paginate="true"
+            :perPage="3"
+            >
+            </vue-good-table>
+            <form @submit.prevent="divisionMethod">
+                <p>Main Table</p>
+                <select name="table" v-model="division.table">
+                    <option value="complaint">Complaint</option>
+                    <option value="customer">Customer</option>
+                    <option value="driver">Driver</option>
+                    <option value="employee">Employee</option>
+                    <option value="insurance">Insurance</option>
+                    <option value="manager">Manager</option>
+                    <option value="package">Package</option>
+                    <option value="receiver">Receiver</option>
+                    <option value="sender">Sender</option>
+                </select>
+                <p>Divisor Table</p>
+                <select name="table" v-model="division.tabledivisor">
+                    <option value="complaint">Complaint</option>
+                    <option value="customer">Customer</option>
+                    <option value="driver">Driver</option>
+                    <option value="employee">Employee</option>
+                    <option value="insurance">Insurance</option>
+                    <option value="manager">Manager</option>
+                    <option value="package">Package</option>
+                    <option value="receiver">Receiver</option>
+                    <option value="sender">Sender</option>
+                </select>
+                <input type="text" name="divisor" placeholder="All Column (Divisor)" v-model="division.all">
+                <input type="text" name="divisor" placeholder="What to Find Column (Joiner)" v-model="division.where">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -122,6 +165,14 @@ export default {
     name: "Custom",
     data() {
         return {
+            division: {
+                table: "",
+                tabledivisor: "",
+                all: "",
+                where: "",
+            },
+            division_data: [],
+            division_cols: [],
             projection: {
                 table: "",
                 column: "",
@@ -229,6 +280,24 @@ export default {
 
                 console.log(JSON.stringify(response.data));
                 this.join_data = response.data;
+            })
+        },
+        divisionMethod: function() {
+            console.log("Division Query")
+            console.log(JSON.stringify(this.division))
+            axios.defaults.headers.common['x-requested-with'] = 'local';
+            axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/special/division", this.division)
+            .then(response => {
+                // Join Columns
+                Object.keys(response.data[0]).map(x => {
+                    this.division_cols.push({
+                        label: x,
+                        field: x
+                    })
+                })
+
+                console.log(JSON.stringify(response.data));
+                this.division_data = response.data;
             })
         }
     }
