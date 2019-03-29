@@ -38,6 +38,11 @@
         </li>
         <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
           <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
+          <router-link to="/Custom" class="router">Custom</router-link>
+          </button>
+        </li>
+        <li v-show="isManager" style="display:inline-block;margin-right:10px;" >
+          <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
           <router-link to="/Stats" class="router">Statistics</router-link>
           </button>
         </li>
