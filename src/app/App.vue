@@ -1,6 +1,6 @@
 <template>
     <div class="jumbotron" style="width: 100% !important; background-color: #ccd !important">
-      <ul v-show="!isNotLoggedIn" style="width: 100% !important;margin-right: 5% !important;margin-left: 12% !important;">
+      <ul v-show="!isNotLoggedIn" style="width: 100% !important;">
         <li style="display:inline-block;margin-right:10px;">
           <button type="button" name="button" style=" border-radius: 5px !important;background-color: #e8c010 !important">
               <router-link to="/" class="router">Home</router-link>
@@ -47,7 +47,7 @@
           </button>
         </li>
       </ul>
-        <div class="container" style="margin-right: 15% !important;margin-left: 15% !important;">
+        <div class="container">
             <div class="row">
                 <div>
                     <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}</div>
