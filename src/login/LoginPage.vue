@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-image: src='../../src/assets/bg.png' !important;">
         <h2>Login</h2>
         <form @submit.prevent="handleSubmit">
             <div class="form-group">
@@ -18,6 +18,7 @@
                 <router-link to="/register" class="btn btn-link">Register</router-link>
             </div>
         </form>
+
     </div>
 </template>
 

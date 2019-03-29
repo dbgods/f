@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h1>Hi {{ account.user.name }}!</h1>
-    <p>You're logged in !</p>
 
-    <p>
-      <router-link to="/login">Logout</router-link>
-    </p>
+    <div class="sss" style="position: absolute;top: 20%;left: 10%; ">
+      <h1>Hi {{ account.user.name }}!</h1>
+      <p>You're logged in !</p>
+    </div>
+
+
   </div>
 </template>
 
