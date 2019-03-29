@@ -1,6 +1,11 @@
 <template>
     <div>
-        <h1>In Progress..</h1>
+        <h1>Statistics</h1>
+        <div>
+            <h2>Aggregation</h2>
+            <p>Average Salary of each type of Employee</p>
+            
+        </div>
     </div>
 </template>
 

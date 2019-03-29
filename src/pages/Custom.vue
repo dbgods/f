@@ -67,18 +67,18 @@
         </div>
         <div>
             <h2>Custom Join</h2>
-            <!-- <vue-good-table
+            <vue-good-table
             class="table"
             title="Custom Join"
-            :columns="empCols"
-            :rows="employees"
+            :columns="join_cols"
+            :rows="join_data"
             :globalSearch="true"
             :paginate="true"
             :perPage="10"
             >
-            </vue-good-table> -->
-            <p>Table 1 & Join Condition</p>
-            <form>
+            </vue-good-table>
+            <p>Table 1, Join Condition & Selected Columns (Comma Delimited)</p>
+            <form @submit.prevent="joinMethod">
                 <select name="table1" v-model="join.table1">
                     <option value="complaint">Complaint</option>
                     <option value="customer">Customer</option>
@@ -90,9 +90,10 @@
                     <option value="receiver">Receiver</option>
                     <option value="sender">Sender</option>
                 </select>
-                <input type="text" name="where1" placeholder="Join Column" v-model="join.table1_joincondition">
+                <input type="text" name="where1" placeholder="Join Column" v-model="join.table1_condition">
+                <input type="text" name="cols1" placeholder="Column(s)" v-model="join.table1_cols">
 
-                <p>Table 2 & Join Condition</p>
+                <p>Table 2, Join Condition & Selected Columns</p>
                 <select name="table2" v-model="join.table2">
                     <option value="complaint">Complaint</option>
                     <option value="customer">Customer</option>
@@ -104,7 +105,8 @@
                     <option value="receiver">Receiver</option>
                     <option value="sender">Sender</option>
                 </select>
-                <input type="text" name="where2" placeholder="Join Column" v-model="join.table2_joincondition">    
+                <input type="text" name="where2" placeholder="Join Column" v-model="join.table2_condition">    
+                <input type="text" name="cols1" placeholder="Column(s)" v-model="join.table2_cols">
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -174,9 +176,13 @@ export default {
             join: {
                 table1: "",
                 table1_condition: "",
+                table1_cols: "",
                 table2: "",
-                table2_condition: ""
-            }
+                table2_condition: "",
+                table2_cols: "",
+            },
+            join_data: [],
+            join_cols: []
         }
     },
     computed: {
@@ -205,6 +211,24 @@ export default {
             .then(response => {
                 console.log(JSON.stringify(response.data));
                 this.projection_data = response.data;
+            })
+        },
+        joinMethod: function() {
+            console.log("Join Query")
+            console.log(JSON.stringify(this.join))
+            axios.defaults.headers.common['x-requested-with'] = 'local';
+            axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/special/join", this.join)
+            .then(response => {
+                // Join Columns
+                Object.keys(response.data[0]).map(x => {
+                    this.join_cols.push({
+                        label: x,
+                        field: x
+                    })
+                })
+
+                console.log(JSON.stringify(response.data));
+                this.join_data = response.data;
             })
         }
     }
