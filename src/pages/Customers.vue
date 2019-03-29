@@ -76,7 +76,7 @@ export default {
         address: "",
         creditRating: 0,
       },
-      packCols: [
+      custCols: [
         {
           label: "ID.",
           field: "customer_id",
@@ -99,17 +99,17 @@ export default {
         },
         {
           label: "CreditRating",
-          field: "cutsomer_creditRating",
+          field: "customer_creditrating",
           filterable: true
         }
       ]
     };
   },
   computed: {
-    complaints: function() {
+    customers: function() {
       if (
-        this.$store.state.complaints == null ||
-        typeof this.$store.state.complaints == "undefined"
+        this.$store.state.customers == null ||
+        typeof this.$store.state.customers == "undefined"
       ) {
         return [
           {
@@ -121,7 +121,7 @@ export default {
           }
         ];
       } else {
-        return this.$store.state.complaints;
+        return this.$store.state.customers;
       }
     }
   },
