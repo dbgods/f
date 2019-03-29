@@ -36,6 +36,34 @@
             </form>
         </div>
         <div>
+            <h2>Custom Projection (One Column)</h2>
+            <vue-good-table
+            class="table"
+            title="Custom Projection"
+            :columns="projection_cols"
+            :rows="projection_data"
+            :globalSearch="true"
+            :paginate="true"
+            :perPage="10"
+            >
+            </vue-good-table>
+            <p>Select Table & Column</p>
+            <form @submit.prevent="projectionMethod">
+                <select name="table" v-model="projection.table">
+                    <option value="complaint">Complaint</option>
+                    <option value="customer">Customer</option>
+                    <option value="driver">Driver</option>
+                    <option value="employee">Employee</option>
+                    <option value="insurance">Insurance</option>
+                    <option value="manager">Manager</option>
+                    <option value="package">Package</option>
+                    <option value="receiver">Receiver</option>
+                    <option value="sender">Sender</option>
+                </select>
+                <input type="text" name="column" placeholder="Column Name" v-model="projection.column">
+                <button type="submit">Submit</button>
+            </form>
+            
         </div>
         <div>
             <h2>Custom Join</h2>
@@ -92,43 +120,50 @@ export default {
     name: "Statistics",
     data() {
         return {
+            projection: {
+                table: "",
+                column: "",
+            },
+            projection_data: [],
+            projection_cols: [
+            ],
             selection_data: [],
             selection_cols: [
-        {
-          label: "Vehicle No.",
-          field: "vehicle_number",
-          filterable: true
-        },
-        {
-          label: "Type",
-          field: "vehicle_type",
-          filterable: true
-        },
-        {
-          label: "Max Capacity",
-          field: "vehicle_maxcapacity",
-          filterable: true
-        },
-        {
-          label: "Availability",
-          field: "vehicle_availability",
-          filterable: true
-        },
-        {
-          label: "Needs Repair?",
-          field: "vehicle_whethertorepair",
-          filterable: true
-        },
-        {
-          label: "Insurance No.",
-          field: "insurance_number",
-          filterable: true
-        },
-        {
-          label: "Warehouse",
-          field: "warehouse_region",
-          filterable: true
-        }
+                {
+                label: "Vehicle No.",
+                field: "vehicle_number",
+                filterable: true
+                },
+                {
+                label: "Type",
+                field: "vehicle_type",
+                filterable: true
+                },
+                {
+                label: "Max Capacity",
+                field: "vehicle_maxcapacity",
+                filterable: true
+                },
+                {
+                label: "Availability",
+                field: "vehicle_availability",
+                filterable: true
+                },
+                {
+                label: "Needs Repair?",
+                field: "vehicle_whethertorepair",
+                filterable: true
+                },
+                {
+                label: "Insurance No.",
+                field: "insurance_number",
+                filterable: true
+                },
+                {
+                label: "Warehouse",
+                field: "warehouse_region",
+                filterable: true
+                }
       ],
             selection: {
                 column: "",
@@ -156,6 +191,20 @@ export default {
             .then(response => {
                 console.log(JSON.stringify(response.data));
                 this.selection_data = response.data;
+            })
+        },
+        projectionMethod: function() {
+            console.log("Projection Query")
+            console.log(JSON.stringify(this.projection))
+            this.projection_cols = [{
+                    label: this.projection.column,
+                    field: this.projection.column,
+            }]
+            axios.defaults.headers.common['x-requested-with'] = 'local';
+            axios.post("https://cors-anywhere.herokuapp.com/ec2-54-86-52-215.compute-1.amazonaws.com:3000/special/projection", this.projection)
+            .then(response => {
+                console.log(JSON.stringify(response.data));
+                this.projection_data = response.data;
             })
         }
     }
