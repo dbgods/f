@@ -36,12 +36,16 @@
         <option value="SmallTruck">SmallTruck</option>
       </select>
       <input type="number" name="capacity" placeholder="Capacity" v-model="formData.capacity">
-      <input type="text" name="availability" placeholder="Availability" v-model="formData.availability">
+      <select name="availability" v-model="formData.availability">
+        <option value="True">True</option>
+        <option value="False">False</option>
+      </select>
       <input type="text" name="insurance" placeholder="Insurance" v-model="formData.insurance">
       <input type="text" name="warehouse" placeholder="Warehouse" v-model="formData.warehouse">
       <button type="submit">Submit</button>
     </form>
   </div>
+
   <div>
     <h2>Delete a Driver</h2>
     <form id="delete_form" @submit.prevent="processFormDel">
@@ -49,6 +53,7 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+
   <div>
     <h2>Modify a Driver</h2>
     <form id="add_form" @submit.prevent="processFormMod">
@@ -71,12 +76,16 @@
         <option value="SmallTruck">SmallTruck</option>
       </select>
       <input type="number" name="capacity" placeholder="Capacity" v-model="formDataModify.capacity">
-      <input type="text" name="availability" placeholder="Availability" v-model="formDataModify.availability">
+      <select name="availability" v-model="formDataModify.availability">
+        <option value="True">True</option>
+        <option value="False">False</option>
+      </select>
       <input type="text" name="insurance" placeholder="Insurance" v-model="formDataModify.insurance">
       <input type="text" name="warehouse" placeholder="Warehouse" v-model="formDataModify.warehouse">
       <button type="submit">Submit</button>
     </form>
   </div>
+  
   </div>
 </template>
 
